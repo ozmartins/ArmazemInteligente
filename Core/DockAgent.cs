@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ArmazemInteligente.Core;
 
-public class DockAgent : Agent {
-    private Dock _dock;
+public class DockAgent(string id, EventBus bus, Blackboard bb, Dock dock) : Agent(id, bus, bb) {
+    private Dock _dock = dock;
     private bool _awaitingErp;
     private List<string> _requestedItems;
-    public DockAgent(string id, EventBus bus, Blackboard bb, Dock dock) : base(id, bus, bb) { _dock = dock; }
 
     protected override void Tick(GameTime gameTime) 
     {
@@ -60,7 +60,9 @@ public class DockAgent : Agent {
                         Send("Vision", EnumPerformative.Request, "LogisticaRacoes", content);
                         Bb.Log($"Dock {Id}: Requested conference.");
                     }
-                } else if (msg.Sender == "Vision") {
+                } 
+                else if (msg.Sender == "Vision") 
+                {
                     var payload = System.Text.Json.JsonDocument.Parse(msg.Content).RootElement;
                     var result = payload.GetProperty("result").GetString();
                     if (result == "ok") 
@@ -80,5 +82,10 @@ public class DockAgent : Agent {
                 Bb.Log($"Dock {Id}: FAILURE from {msg.Sender} -> {msg.Content}");
                 break;
         }
+    }
+
+    protected override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    {
+        spriteBatch.Draw(_dock.Texture, _dock.Position, null, Color.White, MathHelper.ToRadians(0), new Vector2(_dock.Texture.Width / 2f, _dock.Texture.Height / 2f), 0.25f, SpriteEffects.None, 0f);
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ArmazemInteligente.Core;
 
@@ -22,6 +23,8 @@ public abstract class Agent {
             OnMessage(msg);
         Tick(gameTime);
     }
+
+    protected abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
     
     protected abstract void Tick(GameTime gameTime);
     

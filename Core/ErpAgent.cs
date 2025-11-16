@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ArmazemInteligente.Core;
 
@@ -15,5 +17,10 @@ public class ErpAgent(EventBus bus, Blackboard bb) : Agent("ERP", bus, bb) {
             Send(msg.Sender, EnumPerformative.Inform, "LogisticaRacoes", new { items });
             Bb.Log($"ERP: Provided {items.Count} items for truck {truckId}.");
         }
+    }
+
+    protected override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    {
+        Console.Write("draw");
     }
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ArmazemInteligente.Core;
 
@@ -20,5 +22,10 @@ public class VisionAgent(EventBus bus, Blackboard bb) : Agent("Vision", bus, bb)
             Send("Dock1", EnumPerformative.Inform, "LogisticaRacoes", new { result = ok ? "ok" : "divergencia" });
             Bb.Log($"Vision: Conference at dock {dockId} -> {(ok ? "OK" : "Divergência")}.");
         }
+    }
+
+    protected override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    {
+        Console.Write("draw");
     }
 }

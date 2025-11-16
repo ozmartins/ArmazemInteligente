@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ArmazemInteligente.Core;
 
@@ -63,5 +65,10 @@ public class ForkliftAgent(string id, EventBus bus, Blackboard bb, Vector2 start
             dir.Normalize();
             _pos += dir * (float)(80 * gt.ElapsedGameTime.TotalSeconds);
         }
+    }
+
+    protected override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    {
+        Console.Write("draw");
     }
 }
